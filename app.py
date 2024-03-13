@@ -87,59 +87,38 @@ with col5:
     hum_input = st.number_input('Insert Avg Humidity (%) value:',  step = 1., format="%.2f", help = 'Insert here the Avg Humidity (%) from 15 to 99.')
     ph_input = st.number_input('Insert pH value:', step = 0.1, format="%.2f", help = 'Insert here the pH from 3.6 to 9.9')
     rain_input = st.number_input('Insert Avg Rainfall (mm) value:', step = 0.1, format="%.2f", help = 'Insert here the Avg Rainfall (mm) from 21 to 298')
-    
-    # if location == 'Central India':
-    predict_inputs = [[n_input,p_input,k_input,temp_input,hum_input,ph_input,rain_input,1,0,0,0,0,0]]
-    # elif location == 'Eastern India':
-    #     predict_inputs = [[n_input,p_input,k_input,temp_input,hum_input,ph_input,rain_input,0,1,0,0,0,0]]
-    # elif location == 'North Eastern India':
-    #     predict_inputs = [[n_input,p_input,k_input,temp_input,hum_input,ph_input,rain_input,0,0,1,0,0,0]]
-    # elif location == 'Northern India':
-    #     predict_inputs = [[n_input,p_input,k_input,temp_input,hum_input,ph_input,rain_input,0,0,0,1,0,0]]
-    # elif location == 'Other':
-    #     predict_inputs = [[n_input,p_input,k_input,temp_input,hum_input,ph_input,rain_input,0,1,0,0,1,0]]
-    # elif location == 'Western India':
-    #     predict_inputs = [[n_input,p_input,k_input,temp_input,hum_input,ph_input,rain_input,0,1,0,0,0,1]]
-
-
+      
 with col5:
     st.markdown("<br>", unsafe_allow_html=True)
     predict_btn = st.button('Recommend Crop')
     st.markdown("<br>", unsafe_allow_html=True)
 
-
-cola,colb,colc = st.columns([2,10,2])
+    predict_inputs = [[n_input,p_input,k_input,temp_input,hum_input,ph_input,rain_input,1,0,0,0,0,0]]
+    
 if predict_btn:
     rdf_predicted_value = rdf_clf.predict(predict_inputs)
 
-
-    with colb:
-
-        col1, col2 = st.columns([4,5])
-
-        with col1:
-
-            st.markdown(f"<br><h5 style='text-align: right;'>Best Crop to Plant </h5> <h3 style='text-align: right; line-height: 0'> <b>{rdf_predicted_value[0]} </b></h3>", unsafe_allow_html=True)
-    
-        with col2:
-            df_desc = df_desc.astype({'label':str,'image':str})
-            df_desc['label'] = df_desc['label'].str.strip()
-            df_desc['image'] = df_desc['image'].str.strip()
-            
-
-            df_pred_image = df_desc[df_desc['label'].isin(rdf_predicted_value)]
-            df_image = df_pred_image['image'].item()
-            
-            st.markdown(f"""<h5 style = 'text-align: left; height: 300px; object-fit: contain;'> {df_image} </h5>""", unsafe_allow_html=True)
+    if(n_input and p_input and k_input and temp_input and hum_input and ph_input and rain_input):
         
+        st.markdown(f"<br><h5 style='text-align: center;'>Best Crop to Plant </h5> <h3 style='text-align: center; line-height: 0'> <b>{rdf_predicted_value[0]} </b></h3>", unsafe_allow_html=True)
+        df_desc = df_desc.astype({'label':str,'image':str})
+        df_desc['label'] = df_desc['label'].str.strip()
+        df_desc['image'] = df_desc['image'].str.strip()
+        df_pred_image = df_desc[df_desc['label'].isin(rdf_predicted_value)]
+        df_image = df_pred_image['image'].item()
+        st.markdown(f"""<h5 style = 'text-align: center ; height: 300px; object-fit: contain;'> {df_image} </h5>""", unsafe_allow_html=True)
 
-        # st.markdown(f"""<h5 style='text-align: center;'>Statistics Summary about NPK and Weather Conditions values for <b> {rdf_predicted_value[0]} 
-        #     </b></h5>""", unsafe_allow_html=True)
-        # df_pred = df[df['label'] == rdf_predicted_value[0]]
-        # st.dataframe(df_pred.describe(), use_container_width = True)        
-    
+    else:
+        st.markdown("Please fill all input fields") 
 
     
-    
 
-    
+    # st.markdown(f"""<h5 style='text-align: center;'>Statistics Summary about NPK and Weather Conditions values for <b> {rdf_predicted_value[0]} 
+    #     </b></h5>""", unsafe_allow_html=True)
+    # df_pred = df[df['label'] == rdf_predicted_value[0]]
+    # st.dataframe(df_pred.describe(), use_container_width = True)        
+
+
+
+
+
