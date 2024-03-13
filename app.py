@@ -84,7 +84,7 @@ with col3:
     temp_input = st.number_input('Insert Avg Temperature (ºC) value:', step = 1., format="%.2f", help = 'Insert here the Avg Temperature (ºC) from 9 to 43.')
 
 with col5:
-    hum_input = st.text('Insert Avg Humidity (%) value:',  step = 1., format="%.2f", help = 'Insert here the Avg Humidity (%) from 15 to 99.')
+    hum_input = st.number_input('Insert Avg Humidity (%) value:',  step = 1., format="%.2f", help = 'Insert here the Avg Humidity (%) from 15 to 99.')
     ph_input = st.number_input('Insert pH value:', step = 0.1, format="%.2f", help = 'Insert here the pH from 3.6 to 9.9')
     rain_input = st.number_input('Insert Avg Rainfall (mm) value:', step = 0.1, format="%.2f", help = 'Insert here the Avg Rainfall (mm) from 21 to 298')
     
